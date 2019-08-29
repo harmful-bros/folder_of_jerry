@@ -1,0 +1,6 @@
+*.o
+tags
+*.out
+test*
+*.swp
+*.d
