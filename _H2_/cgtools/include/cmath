@@ -1,0 +1,50 @@
+/*****************************************************************************/
+/* cmath     v4.1.3                                                          */
+/* Copyright (c) 1996-2006 Texas Instruments Incorporated                    */
+/*****************************************************************************/
+
+#ifndef _CMATH
+#define _CMATH
+
+#include <cfloat>
+#define HUGE_VAL  DBL_MAX
+
+extern "C" namespace std
+{
+   /***************************************************************/
+   /* FUNCTION DEFINITIONS.                                       */
+   /***************************************************************/
+          double modf(double x, double *y); 
+          double asin(double x);
+          double acos(double x);
+          double atan(double x);
+          double atan2(double y, double x);
+ __inline double ceil(double x)  { double y; return (modf(x, &y) > 0 ? y+1:y); }
+          double cos(double x);
+          double cosh(double x);
+          double exp(double x);
+ __inline double floor(double x) { double y; return (modf(x, &y) < 0 ? y-1:y); }
+          double fmod(double x, double y);
+          double frexp(double x, int *exp);
+          double ldexp(double x, int exp);
+          double log(double x);
+          double log10(double x);
+          double pow(double x, double y);
+          double sin(double x);
+          double sinh(double x);
+          double tan(double x);
+          double tanh(double x);
+          double sqrt(double x);
+}
+
+#ifdef __embedded_cplusplus
+//----------------------------------------------------------------------------
+// We cannot expect the embedded C++ user to use std namespace. So we include
+
+// the using directive when compiled under embedded C++.
+//----------------------------------------------------------------------------
+using namespace std;
+#endif
+
+#endif 
+

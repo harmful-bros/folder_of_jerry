@@ -1,0 +1,41 @@
+---- g_int32turn_acc Matches (40 in 7 files) ----
+Fastrun.c (d:\work\_h2_\user\main):	move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc );  //출발!!
+Main.c (d:\work\_h2_\user\main):	g_int32turn_acc = 0;
+Menu.c (d:\work\_h2_\user\main):	g_int32turn_acc = 8;
+Rom.c (d:\work\_h2_\user\main):	wbuf[ i++ ] = ( ( ( Uint16 )g_int32turn_acc ) >> 0 ) & 0xff;
+Rom.c (d:\work\_h2_\user\main):	wbuf[ i++ ] = ( ( ( Uint16 )g_int32turn_acc ) >> 8 ) & 0xff;		
+Rom.c (d:\work\_h2_\user\main):	g_int32turn_acc = ( int32 )( ( rbuf[ i++ ] & 0xff ) << 0 );
+Rom.c (d:\work\_h2_\user\main):	g_int32turn_acc |= ( int32 )( ( rbuf[ i++ ] & 0xff ) << 8 );	
+Rom.c (d:\work\_h2_\user\main):	SCIa_Printf("turn acc : %4lu\n" , ( Uint32 )g_int32turn_acc );	
+Search.c (d:\work\_h2_\user\main):	move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc );  //출발!!
+Smooth_turn.c (d:\work\_h2_\user\main):		g_int32turn_acc = g_rmotor.int32accel = g_lmotor.int32accel = 5;
+Smooth_turn.c (d:\work\_h2_\user\main):		move_to_move( ( ONE_BLOCK * ( float32 )15.0 ) - 20.0 , a_fp32speed , TEST_TURN , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):	move_end( ( ONE_BLOCK * 3.0 ) - sub_dist , ( float32 )g_int32turn_vel , ( ONE_BLOCK * 3.0 ) - sub_dist , ( float32 )g_int32turn_vel , g_int32turn_acc );	
+Smooth_turn.c (d:\work\_h2_\user\main)://	move_end( ONE_BLOCK * 1.0 - 90.0 , ( float32 )g_int32turn_vel , ONE_BLOCK * 1.0 - 90.0 , ( float32 )g_int32turn_vel , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main)://	move_end( ONE_BLOCK * 2.0 , ( float32 )g_int32turn_vel , ONE_BLOCK * 2.0 , ( float32 )g_int32turn_vel , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):	move_end( 0.0 , 0.0 , 0.0 , 0.0 , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):			move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):		move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):				move_end( ( float32 )0.0 , ( float32 )0.0 , ( float32 )0.0 , ( float32 )0.0 , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):				move_end( 0.0 , 0.0 , 0.0 , 0.0 , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):		move_end( ONE_BLOCK + BACKTURN_COMPEN_DIST , ( float32 )g_int32turn_vel , ONE_BLOCK + BACKTURN_COMPEN_DIST , ( float32 )g_int32turn_vel , g_int32turn_acc ); //앞벽이 없는 경우 -> 한블럭 완전 가기 
+Smooth_turn.c (d:\work\_h2_\user\main):		move_end( right_across_dist * -( float32 )1.0 , right_across_vel * -( float32 )1.0 , left_across_dist * -( float32 )1.0 , left_across_vel * -( float32 )1.0 , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):		move_end( left_across_dist * -( float32 )1.0 , left_across_vel * -( float32 )1.0 , right_across_dist * -( float32 )1.0 , right_across_vel * -( float32 )1.0 , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):		move_end( right_across_dist , right_across_vel , left_across_dist , left_across_vel , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):		move_end( left_across_dist , left_across_vel , right_across_dist , right_across_vel , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):		g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):		move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):		g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):		move_end( 0.0 , 0.0 , 0.0 , 0.0 , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):	g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):			move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc ); //직진일 경우 한블럭 완전 가기.		
+Smooth_turn.c (d:\work\_h2_\user\main):	g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):	move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc ); //180도 턴 탈출은 무조건 직진!!
+Smooth_turn.c (d:\work\_h2_\user\main):	g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):	g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):		move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc );
+Smooth_turn.c (d:\work\_h2_\user\main):	g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):	g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):	g_rmotor.int32accel = g_lmotor.int32accel = g_int32turn_acc;
+Smooth_turn.c (d:\work\_h2_\user\main):			move_to_move( ONE_BLOCK , ( float32 )g_int32turn_vel , ( float32 )g_int32turn_vel , g_int32turn_acc ); //직진일 경우 한블럭 완전 가기.		
+Variable.h (d:\work\_h2_\user\include):									g_int32turn_acc , 

@@ -1,0 +1,30 @@
+********************************************************************************
+TMS320C2000 Hex Converter                                                 v5.1.1
+********************************************************************************
+
+INPUT FILE NAME: <a_H2.out>
+OUTPUT FORMAT:   Intel
+
+PHYSICAL MEMORY PARAMETERS
+   Default data width   :  16
+   Default memory width :  16
+   Default output width :  16
+
+
+OUTPUT TRANSLATION MAP
+--------------------------------------------------------------------------------
+00000000..003fffff  Page=0  Memory Width=16  ROM Width=16
+--------------------------------------------------------------------------------
+   OUTPUT FILES: a_H2.hex [b0..b15]
+
+   CONTENTS: 00008300..00008301   codestart Data Width=2   
+             00008302..00009f34   ramfuncs Data Width=2   
+             00100000..00104875   .text Data Width=2   
+             001058ba..001064e9   TURN_TABLE Data Width=2   
+             001064ea..00106f6d   .econst Data Width=2   
+             0010736e..0010742d   .cinit Data Width=2   
+
+--------------------------------------------------------------------------------
+00000000..003fffff  Page=1  Memory Width=16  ROM Width=16  "*DEFAULT PAGE 1*"
+--------------------------------------------------------------------------------
+   NO CONTENTS
