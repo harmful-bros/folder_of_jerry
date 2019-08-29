@@ -1,0 +1,26 @@
+---- fp32next_acc Matches (26 in 3 files) ----
+Main.c (d:\work\_varhae_\user28335\main):			SCIa_Printf("%10lf %5lf %5lf\n" , ( R_motor.fp32cur_vel_avr + L_motor.fp32cur_vel_avr ) * 0.5 , L_motor.fp32next_acc , R_motor.fp32next_acc );
+Motor.c (d:\work\_varhae_\user28335\main):	pm->fp32next_acc = START_JERK_LIMIT;
+Motor.c (d:\work\_varhae_\user28335\main):	if( ( float32 )( R_motor.int32accel ) > R_motor.fp32next_acc )
+Motor.c (d:\work\_varhae_\user28335\main):		R_motor.fp32next_acc += ( ( float32 )( R_motor.int16qep_value ) * ( float32 )( PULSE_TO_JERK ) );
+Motor.c (d:\work\_varhae_\user28335\main):		if( ( float32 )R_motor.int32accel < R_motor.fp32next_acc )
+Motor.c (d:\work\_varhae_\user28335\main):			R_motor.fp32next_acc = ( float32 )( R_motor.int32accel );	
+Motor.c (d:\work\_varhae_\user28335\main):	else if( ( float32 )( R_motor.int32accel ) < R_motor.fp32next_acc )	
+Motor.c (d:\work\_varhae_\user28335\main):		R_motor.fp32next_acc -= ( ( float32 )( R_motor.int16qep_value ) * ( float32 )( PULSE_TO_JERK ) );
+Motor.c (d:\work\_varhae_\user28335\main):		if( ( float32 )R_motor.int32accel > R_motor.fp32next_acc )
+Motor.c (d:\work\_varhae_\user28335\main):			R_motor.fp32next_acc = ( float32 )( R_motor.int32accel );	
+Motor.c (d:\work\_varhae_\user28335\main):	if( ( float32 )( L_motor.int32accel ) > L_motor.fp32next_acc )
+Motor.c (d:\work\_varhae_\user28335\main):		L_motor.fp32next_acc += ( ( float32 )( L_motor.int16qep_value ) * ( float32 )( PULSE_TO_JERK ) );
+Motor.c (d:\work\_varhae_\user28335\main):		if( ( float32 )L_motor.int32accel < L_motor.fp32next_acc )
+Motor.c (d:\work\_varhae_\user28335\main):			L_motor.fp32next_acc = ( float32 )( L_motor.int32accel );		
+Motor.c (d:\work\_varhae_\user28335\main):	else if( ( float32 )( L_motor.int32accel ) < L_motor.fp32next_acc )	
+Motor.c (d:\work\_varhae_\user28335\main):		L_motor.fp32next_acc -= ( ( float32 )( L_motor.int16qep_value ) * ( float32 )( PULSE_TO_JERK ) );
+Motor.c (d:\work\_varhae_\user28335\main):		if( ( float32 )L_motor.int32accel > L_motor.fp32next_acc )
+Motor.c (d:\work\_varhae_\user28335\main):			L_motor.fp32next_acc = ( float32 )( L_motor.int32accel );		
+Motor.c (d:\work\_varhae_\user28335\main):	R_motor.fp32next_acc = ( float32 )R_motor.int32accel;
+Motor.c (d:\work\_varhae_\user28335\main):	L_motor.fp32next_acc = ( float32 )L_motor.int32accel;	
+Motor.c (d:\work\_varhae_\user28335\main):		R_motor.fp32next_vel += ( ( float32 )fabs( ( double )( R_motor.fp32next_acc ) ) * ( float32 )SAMPLE_FRQ_MS );
+Motor.c (d:\work\_varhae_\user28335\main):		R_motor.fp32next_vel -= ( ( float32 )fabs( ( double )( R_motor.fp32next_acc ) ) * ( float32 )SAMPLE_FRQ_MS );
+Motor.c (d:\work\_varhae_\user28335\main):		L_motor.fp32next_vel += ( ( float32 )fabs( ( double )( L_motor.fp32next_acc ) ) * ( float32 )SAMPLE_FRQ_MS );
+Motor.c (d:\work\_varhae_\user28335\main):		L_motor.fp32next_vel -= ( ( float32 )fabs( ( double )( L_motor.fp32next_acc ) ) * ( float32 )SAMPLE_FRQ_MS );
+Struct.h (d:\work\_varhae_\user28335\include):	float32	fp32next_acc;

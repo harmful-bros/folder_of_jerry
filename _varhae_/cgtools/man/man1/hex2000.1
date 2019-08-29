@@ -1,0 +1,197 @@
+.bd B 3
+.TH hex2000 1 "Sep 27, 2010" "TI Tools" "TI Code Generation Tools"
+.SH NAME
+hex2000 - Hex Converter
+.SH SYNOPSIS
+.B hex2000
+[
+.I options
+] [
+.I file(s)
+]
+.SH DESCRIPTION
+The hex converter converts an object file into one of several standard hexadecimal formats.
+.SH OPTIONS
+The following options are accepted by this tool:
+.SS General Options:
+.SS
+.TP
+-a
+Output ASCII hex format
+.TP
+-b
+Binary output format (for DSKs)
+.TP
+-boot
+Select boot mode
+.TP
+-bootorg=addr
+Specify origin address or symbol of boot table ROM
+.TP
+-byte
+Output as bytes rather than target addressing
+.TP
+-can8
+Specify table source as the GP I/O port, 8-bit mode [Same as -gpio8]
+.TP
+-divsel=value
+Specify the initial value for the DIVSEL register. Valid only if -xintf8/xintf16 is used
+.TP
+-e=addr
+Specify entrypoint address or symbol name
+.TP
+-exclude=section
+Exclude section from hex conversion
+.TP
+-fill=val
+Specify fill value
+.TP
+-gpio16
+Specify table source as the GP I/O port, 16-bit mode
+.TP
+-gpio8
+Specify table source as the GP I/O port, 8-bit mode [Same as -can8]
+.TP
+-h
+Display a help message that includes usage and option information [Same as -options]
+.TP
+-i
+Output Intel hex format
+.TP
+-i2c8
+Specify I2C port as source of boot table loader
+.TP
+-i2cclkh=value
+Specify the initial value for I2CCLKH register
+.TP
+-i2cclkl=value
+Specify the initial value for the I2CCLKL register
+.TP
+-i2cpsc=value
+Specify the initial value for I2CPSC register
+.TP
+-image
+Select image mode
+.TP
+-linkerfill
+Include linker fill sections in images
+.TP
+--load_image
+Output Load Image Object format
+.TP
+-lospcp=value
+Specify the initial value for the LOSPCP register
+.TP
+-map=file
+Specify map file name
+.TP
+-memwidth=width
+Specify memory width
+.TP
+-m[=1,2,3]
+Output Motorola S hex format
+.TP
+-o=file
+Specify output file names
+.TP
+-olength=num
+Number of data items per line of hex output
+.TP
+-options
+Display a help message that includes usage and option information [Same as -h]
+.TP
+-order=LS,MS
+Specify data ordering (endianness)
+.TP
+-pllcr=value
+Specify the initial value for the PLLCR register. Valid only if -xintf8/xintf16 is used
+.TP
+-q
+Quiet Operation [Same as -quiet]
+.TP
+-quiet
+Quiet Operation [Same as -q]
+.TP
+-romwidth=width
+Specify rom width
+.TP
+--sb
+Swap output bytes for 16byte memwidth
+.TP
+-sci8
+Specify table source as the SCI-A port, 8-bit mode
+.TP
+--section_name_prefix=string
+Prefix for load image object sections
+.TP
+-spi8
+Specify table source as the SPI-A port, 8-bit mode
+.TP
+-spibrr=value
+Specify the initial value for the SPIBRR register
+.TP
+-t
+Output TI-Tagged hex format
+.TP
+--ti_txt
+Output TI-TXT hex format
+.TP
+-x
+Output Extended Tektronix hex format
+.TP
+-xintcnf2=value
+Specify the initial value for the XINTCNF2 register. Valid only if -xintf8/xintf16 is used
+.TP
+-xintf16
+Specify parallel XINTF stream, 16-bit mode
+.TP
+-xintf8
+Specify parallel XINTF stream, 8-bit mode
+.TP
+-xtiming=value
+Specify the initial value for the XTIMING register. Valid only if -xintf8/xintf16 is used
+.TP
+-z
+Zero based addressing [Same as -zero]
+.TP
+-zero
+Zero based addressing [Same as -z]
+.SS Diagnostics Options:
+.SS
+.TP
+--diag_error=id
+Treat diagnostic <id> as error
+.TP
+--diag_remark=id
+Treat diagnostic <id> as remark
+.TP
+--diag_suppress=id
+Suppress diagnostic <id>
+.TP
+--diag_warning=id
+Treat diagnostic <id> as warning
+.TP
+--display_error_number
+Emit diagnostic identifier numbers
+.TP
+--issue_remarks
+Issue remarks
+.TP
+--no_warnings
+Suppress warnings
+.TP
+--set_error_limit=count
+Set error limit to <count>
+.SH EXIT STATUS
+The following error values are returned:
+.PD 0
+.TP 10
+.B 0
+Successful completion.
+.TP
+.B >0
+Unsuccessful completion; an error occured.
+.PD
+.SH COPYRIGHT
+.TP
+Copyright (c) 2010, Texas Instruments, Inc.
