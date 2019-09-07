@@ -1,175 +1,117 @@
-#include "queue.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 
-static int _enqueue_func(que_t *pque, int data);
-static int _dequeue_func(que_t *pque);
-static int _queue_create(que_t **ppque);
-static int _queue_destory(que_t **ppque);
+#include <linked_list.h>
 
-///////////////////////////////////////////////////////////////////////////////
+#define CHECK_QUEUE(que)													\
+	do {																	\
+		if (unlikely(que == NULL)) {										\
+			ERR_MSG("Invaild paramters.");									\
+			return -EPERM;													\
+		}																	\
+	} while(0)
 
-static list_t *_create_node(void)
+typedef struct queue
 {
-	list_t *pnew = (list_t *)malloc(sizeof(list_t));
-	if (pnew == NULL)
-	{
-		MEM_ERR_QUEUE_MSG;
-		goto error;
-	}
+	list_t *front;
+	list_t *rear;
+}que_t;
 
-	memset((void *)pnew, 0x00, sizeof(list_t));
+static que_t *_init_queue(void);
+static int _clear_queue(que_t *que);
+static int _enqueue_func(que_t *que, int data);
+static int _dequeue_func(que_t *que);
 
-error :
-	return pnew;
+static que_t *
+_init_queue(void)
+{
+	que_t *new = calloc(1, sizeof(que_t));
+	if (unlikely(new == NULL))
+		ERR_MSG("Failed to create queue pointer.");
+
+	return new;
 }
 
-static int _destroy_node(list_t **ppdel)
+static int
+_clear_queue(que_t *que)
 {
-	if (ppdel == NULL)
-	{
-		QUE_MEM_ERR_STA;
-		goto error;
-	}
+	CHECK_QUEUE(que);
 
-	if (*ppdel)
-	{
-		free((void *)*ppdel);
-		*ppdel = NULL;
-	}
+	free(que);
+	que = NULL;
 
 	return 0;
-
-error :
-	return -1;
 }
 
-static int _enqueue_func(que_t *pque, int data)
+static int
+_enqueue_func(que_t *que, int data)
 {
-	list_t *pnew;
+	CHECK_QUEUE(que);
 
-	pnew = _create_node();
-	if (pnew == NULL)
-		goto error;
+	list_t *new = create_list();
+	if (unlikely(new == NULL))
+		return -EPERM;
 
-	pnew->data = data;
+	new->data = data;
 
-	if (pque->phead)
-	{
-		pque->phead->pnext = pnew;
-		pque->phead = pnew;
-	}
+	/* increase queue */
+	if (que->rear)
+		que->rear->ptr = new;
 	else
-	{
-		pque->phead = pnew;
-		pque->prear = pnew;
-	}
+		que->front = new;		/* empty status in queue */
+
+	que->rear = new;
+
+	printf("[En] %d\n", que->rear->data);
 
 	return 0;
-
-error :
-	return -1;
 }
 
-static int _dequeue_func(que_t *pque)
+static int
+_dequeue_func(que_t *que)
 {
-	int ret = -1;
-	list_t *pdel;
+	CHECK_QUEUE(que);
 
-	pdel = pque->prear;
-	if (pdel)
+	list_t *del = que->front;
+	if (del == NULL)
 	{
-		ret = pdel->data;
-		pque->prear = pdel->pnext;
-		if (pque->prear == NULL)
-			pque->phead = NULL;
-	
-		QUE_DATA_MSG(pdel->data);
-		_destroy_node(&pdel);
-	}
-	else
-		QUE_EMPTY_MSG;
-
-	return ret;
-}
-
-static int _queue_create(que_t **ppque)
-{
-	if (ppque == NULL)
-	{
-		MEM_ERR_QUEUE_MSG;
-		goto error;
+		ERR_MSG("Empty status in the queue.");
+		return -EPERM;
 	}
 
-	*ppque = (que_t *)malloc(sizeof(que_t));
-	if (*ppque == NULL)
-	{
-		MEM_ERR_QUEUE_MSG;
-		goto error;
-	}
+	/* decreate queue */
+	que->front = que->front->ptr;
+	if (que->front == NULL)
+		que->rear = NULL;
 
-	CONFIRM_ADDRESS("que head", *ppque);
-	memset((void *)*ppque, 0x00, sizeof(que_t));
+	printf("[De] %d\n", del->data);
+
+	free(del);
 
 	return 0;
-
-error :
-	return -1;
 }
 
-static int _queue_destory(que_t **ppque)
+int
+main(void)
 {
-	if (ppque == NULL)
+	que_t *que = _init_queue();
+	if (unlikely(que == NULL))
+		return -EPERM;
+
+	int i;
+	int ret;
+	for (i = 0; i < 10; i++)
 	{
-		MEM_ERR_QUEUE_MSG;
-		goto error;
+		ret = _enqueue_func(que, i + 1);
+		if (ret < 0)
+			goto escape;
 	}
+	printf("\n");
 
-	if (*ppque)
-	{
-		CONFIRM_ADDRESS("que head", *ppque);
-		free((void *)*ppque);
-		*ppque = NULL;
-	}
+escape:
+	while ((ret = _dequeue_func(que)) >= 0);
+	_clear_queue(que);
 
-	return 0;
-
-error :
-	return -1;
-}
-
-int main(void)
-{
-	que_t *pque = NULL;
-
-	if (_queue_create(&pque) < 0)
-		goto error;
-
-	if (_enqueue_func(pque, 1) < 0)
-		goto error;
-
-	if (_enqueue_func(pque, 2) < 0)
-		goto error;
-
-	if (_enqueue_func(pque, 3) < 0)
-		goto error;
-
-	if (_enqueue_func(pque, 4) < 0)
-		goto error;
-
-	if (_enqueue_func(pque, 5) < 0)
-		goto error;
-
-#if 0
-	_dequeue_func(pque);
-	_dequeue_func(pque);
-	_dequeue_func(pque);
-	_dequeue_func(pque);
-	_dequeue_func(pque);
-#endif
-	_dequeue_func(pque);
-	_dequeue_func(pque);
-
-error :
-	while (_dequeue_func(pque) != QUEUE_EMPTY_DATA);
-	_queue_destory(&pque);
 	return 0;
 }

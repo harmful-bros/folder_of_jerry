@@ -1,13 +1,21 @@
 CC = gcc
-CFLAGS = -W -Wall
+CFLAGS = -W -Wall -g -ggdb
 TARGET = test
 
-OBJ = $(patsubst %.c, %.o, $(wildcard *.c))
+INCD = ../stack
+
+SRCS := $(wildcard *.c)
+OBJS := $(SRCS:.c=.o)
+INC_OPTS := -I$(INCD)
 
 all : $(TARGET)
 
-$(TARGET) : $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
+$(TARGET) : $(OBJS) $(INCD)/linked_list.o
+	$(CC) -o $@ $^
 
-clean : 
+.SUFFIXES: .c .o
+.c.o:
+	$(CC) $(CFLAGS) $(INC_OPTS) -c $< -o $@
+
+clean:
 	rm -rf *.o $(TARGET)

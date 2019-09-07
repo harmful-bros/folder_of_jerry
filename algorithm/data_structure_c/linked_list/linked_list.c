@@ -1,185 +1,177 @@
-#include "linked_list.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 
-static list_t *_create_node(void);
-static int _destroy_node(list_t **ppdel);
+#include "./linked_list.h"
 
-static int _insert_linked_list(list_t *phead, int data);
-static int _desert_linked_list(list_t *phead, int data);
-static list_t *_search_data_in_list(list_t *phead, list_t **pppre, int data);
-static int _delete_all_linked_list(list_t *phead);
+static int _insert_list(list_t *head, int in_data);
+static int _desert_list(list_t *head, int out_data);
+static int _print_list(const list_t *head);
+static int _delete_all_list(list_t *head);
 
-///////////////////////////////////////////////////////////////////////////////
-
-static list_t *_create_node(void)
+list_t *
+init_list(void)
 {
-	list_t *pnew = NULL;
-	
-	pnew = (list_t *)malloc(sizeof(list_t));
-	if (pnew == NULL)
+	list_t *new = (list_t *)calloc(1, sizeof(list_t));
+	if (unlikely(new == NULL))
 	{
-		MEM_SHORTAGE_MSG;
-		goto error;
+		ERR_MSG("Failed to create head list.\n");
+		return NULL;
 	}
-	memset((void *)pnew, 0x00, sizeof(list_t));
 
-	CONFIRM_ADDRESS("malloc", pnew);
+	DEBUG_MSG("[Head] %p\n", new);
 
-	return pnew;
-
-error :
-	return NULL;
+	return new;
 }
 
-static int _destroy_node(list_t **ppdel)
+int
+clear_list(list_t *head)
 {
-	if (*ppdel)
+	if (unlikely(head == NULL))
 	{
-		CONFIRM_ADDRESS("free", *ppdel);
-
-		free((void *)*ppdel);
-		*ppdel = NULL;
+		printf("Invalild parameters.\n");
+		return -EPERM;
 	}
+
+	DEBUG_MSG("[Head] %p\n", head);
+
+	free(head);
+	head = NULL;
 
 	return 0;
 }
 
-static int _insert_linked_list(list_t *phead, int data)
+static int
+_insert_list(list_t *head, int in_data)
 {
-	if (phead == NULL)
+	if (unlikely(head == NULL))
 	{
-		LIST_MEM_ERR_STA;
-		goto error;
+		ERR_MSG("Invalild parameters.\n");
+		return -EPERM;
 	}
 
-	list_t *ptemp = phead;
-	list_t *pnew = _create_node();
-	if (pnew == NULL)
-		goto error;
+	/* new list */
+	list_t *new = (list_t *)malloc(sizeof(list_t));
+	if (new == NULL)
+	{
+		ERR_MSG("Failed to create list.\n");
+		return -errno;
+	}
 
-	pnew->data = data;
-	pnew->pnext = NULL;
+	new->data = in_data;
+	new->ptr = NULL;
 
-	while (ptemp->pnext)
-		ptemp = ptemp->pnext;
+	DEBUG_MSG("[New] %p\n", new);
 
-	ptemp->pnext = pnew;
-
-	printf("input : %10d %p\n", pnew->data, pnew);
+	/* insert */
+	if (head->ptr)
+		new->ptr = head->ptr;
+	head->ptr = new;
 
 	return 0;
-error :
-	return -1;
 }
 
-static int _desert_linked_list(list_t *phead, int data)
+static int
+_desert_list(list_t *head, int out_data)
 {
-	if (phead == NULL)
+	if (unlikely(head == NULL))
 	{
-		LIST_MEM_ERR_STA;
-		goto error;
+		ERR_MSG("Invalid parameters.\n");
+		return -EPERM;
 	}
 
-	list_t *ppre = phead;
-	list_t *pdel = _search_data_in_list(phead, &ppre, data);
-	if (pdel)
+	list_t *pre = head;
+	list_t *del = head->ptr;
+	for (; del; pre = del, del = del->ptr)
 	{
-		ppre->pnext = pdel->pnext;
-		_destroy_node(&pdel);
-	}
-	else
-		printf("There is not matching data.\n");
-
-	return 0;
-
-error :
-	return -1;
-}
-
-static list_t *_search_data_in_list(list_t *phead, list_t **pppre, int data)
-{
-	if (phead == NULL || pppre == NULL)
-	{
-		LIST_MEM_ERR_STA;
-		goto error;
-	}
-
-	list_t *ptemp = phead;
-
-	while (ptemp)
-	{
-		if (ptemp->data == data)
-		{
-			printf("Search : %10d %p\n", data, ptemp);
+		if (del->data == out_data)
 			break;
-		}
-
-		*pppre = ptemp;		
-		ptemp = ptemp->pnext;
 	}
 
-	return ptemp;
-error :
-	return NULL;
+	if (del == NULL)
+	{
+		ERR_MSG("Not matched the data.\n");
+		return -EPERM;
+	}
+
+	pre->ptr = del->ptr;
+	DEBUG_MSG("[Del] %p\n", del);
+
+	del->ptr = NULL;
+	free(del);
+
+	return 0;
 }
 
-static int _delete_all_linked_list(list_t *phead)
+static int
+_print_list(const list_t *head)
 {
-	if (phead == NULL)
+	int i;
+	head = head->ptr;
+	for (i = 0; head; head = head->ptr, i++)
+		printf("[%d] %d\n", i, head->data);
+
+	return 0;
+}
+
+static int
+_delete_all_list(list_t *head)
+{
+	if (unlikely(head == NULL))
 	{
-		LIST_MEM_ERR_STA;
-		goto error;
+		ERR_MSG("Invalild parameters.\n");
+		return -EPERM;
 	}
 
-	list_t *pdel;
-	list_t *ptemp = phead->pnext;
-
-	while (ptemp)
+	list_t *pre;
+	list_t *del = head->ptr;
+	while (del)
 	{
-		pdel = ptemp;
-		phead->pnext = ptemp->pnext;
-
-		_destroy_node(&pdel);
-		ptemp = ptemp->pnext;
+		pre = del;
+		del = del->ptr;
+		DEBUG_MSG("[Del] %p\n", pre);
+		free(pre);
 	}
 
 	return 0;
-
-error : 
-	return -1;
 }
 
-int main(void)
+int
+main(void)
 {
-	list_t *phead = _create_node();
-	if (phead == NULL)
-		goto error;
+	list_t *head = init_list();
+	if (head == NULL)
+		return -EPERM;
+
+	int i;
+	int ret;
+	for (i = 0; i < 10; i++)
+	{
+		ret = _insert_list(head, i + 1);
+		if (ret < 0)
+			goto escape;
+	}
+
+	_print_list(head);
+
+	ret = _desert_list(head, 3);
+	if (ret < 0)
+		goto escape;
+
+	ret = _desert_list(head, 5);
+	if (ret < 0)
+		goto escape;
+
+	ret = _desert_list(head, 7);
+	if (ret < 0)
+		goto escape;
+
 	printf("\n");
+	_print_list(head);
 
-	if (_insert_linked_list(phead, 1) < 0)
-		goto error;
-
-	if (_insert_linked_list(phead, 111) < 0)
-		goto error;
-
-	if (_insert_linked_list(phead, 333) < 0)
-		goto error;
-
-	if (_insert_linked_list(phead, 444) < 0)
-		goto error;
-
-	if (_insert_linked_list(phead, 999999) < 0)
-		goto error;
-
-	printf("\n");
-	_desert_linked_list(phead, 1);
-	_desert_linked_list(phead, 444);
-	_desert_linked_list(phead, 333);
-	printf("\n");
-
-error :
-	_delete_all_linked_list(phead);
-	printf("\n");
-	_destroy_node(&phead);
+escape:
+	_delete_all_list(head);
+	clear_list(head);
 
 	return 0;
 }

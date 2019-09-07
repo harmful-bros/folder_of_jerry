@@ -7,7 +7,7 @@
 
 #define ERR_MSG(fmt, ...)													\
 	do {																	\
-			printf("[ERR] " fmt " / func : %s, line : %d",					\
+			printf("[ERR] " fmt " / func : %s, line : %d\n",					\
 				##__VA_ARGS__, __func__, __LINE__);							\
 	} while(0)
 
@@ -26,7 +26,7 @@ typedef struct linked_list
 	struct linked_list *ptr;
 }list_t;
 
-extern list_t *init_list(void);
-extern int clear_list(list_t *head);
+extern list_t *create_list(void);
+extern int destroy_list(list_t *del);
 
 #endif
