@@ -1,6 +1,6 @@
 # Welcomm to the Jerry's Folder
 ## Who I am?
-<center><img src="https://user-images.githubusercontent.com/54479819/64472272-995fc200-d196-11e9-8e2e-39001540da44.jpg" width="200" hight="200"></center>
+<center><img src="https://user-images.githubusercontent.com/54479819/64472272-995fc200-d196-11e9-8e2e-39001540da44.jpg" width="400" hight="400"></center>
 
 Hello. This is Jerry.<br>
 I am an **_embedded system engineer_** and deal with **_Firmware_**, 
