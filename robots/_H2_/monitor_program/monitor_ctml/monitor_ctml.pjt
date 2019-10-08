@@ -1,0 +1,61 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="C:\Users\Administrator\Desktop\monitor_base\monitor_ctml\"
+ProjectType=Executable
+CPUFamily=TMS320C28XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\main\DSP2833x_Adc.c"
+Source="..\main\DSP2833x_ADC_cal.asm"
+Source="..\main\DSP2833x_CodeStartBranch.asm"
+Source="..\main\DSP2833x_CpuTimers.c"
+Source="..\main\DSP2833x_DefaultIsr.c"
+Source="..\main\DSP2833x_DMA.c"
+Source="..\main\DSP2833x_ECan.c"
+Source="..\main\DSP2833x_ECap.c"
+Source="..\main\DSP2833x_EPwm.c"
+Source="..\main\DSP2833x_EQep.c"
+Source="..\main\DSP2833x_GlobalVariableDefs.c"
+Source="..\main\DSP2833x_Gpio.c"
+Source="..\main\DSP2833x_I2C.c"
+Source="..\main\DSP2833x_Mcbsp.c"
+Source="..\main\DSP2833x_MemCopy.c"
+Source="..\main\DSP2833x_PieCtrl.c"
+Source="..\main\DSP2833x_PieVect.c"
+Source="..\main\DSP2833x_Sci.c"
+Source="..\main\DSP2833x_Spi.c"
+Source="..\main\DSP2833x_SysCtrl.c"
+Source="..\main\DSP2833x_usDelay.asm"
+Source="..\main\DSP2833x_Xintf.c"
+Source="..\main\Example_Flash2833x_CsmKeys.asm"
+Source="..\main\flash.c"
+Source="..\main\main.c"
+Source="..\main\serial.c"
+Source="..\main\vfd.c"
+Source="..\main\monitor28335_ctml.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-pdr -pdsw225 -fr"$(Proj_dir)\Debug" -i"..\include" -d"_DEBUG" -d"LARGE_MODEL" -ml -v28 --float_support=fpu32
+
+["Compiler" Settings: "Release"]
+Options=-pdsw225 -o3 -fr"$(Proj_dir)\Release" -d"LARGE_MODEL" -ml -v28
+
+["Linker" Settings: "Debug"]
+Options=-c -e_c_int00 -farheap0x300 -heap1 -m".\Debug\monitor_ctml.map" -o".\Debug\monitor_ctml.out" -stack1 -w -x -i"..\lib" -l"rts2800_fpu32.lib" -l"Flash28335_API_V210.lib"
+
+["Linker" Settings: "Release"]
+Options=-c -m".\Release\monitor_ctml.map" -o".\Release\monitor_ctml.out" -w -x
+
+["..\main\monitor28335_ctml.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["..\main\monitor28335_ctml.cmd" Settings: "Release"]
+LinkOrder=1
+

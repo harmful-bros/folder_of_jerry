@@ -1,0 +1,4 @@
+---- BUFF_SIZE Matches (3 in 1 files) ----
+Vfd.c (c:\users\user\desktop\leejaeseong\monitor_base\main):	BUFF_SIZE = 128 , 
+Vfd.c (c:\users\user\desktop\leejaeseong\monitor_base\main):char g_real_str[ BUFF_SIZE ];
+Vfd.c (c:\users\user\desktop\leejaeseong\monitor_base\main):int32 val_table[ BUFF_SIZE ] = { 0 , };

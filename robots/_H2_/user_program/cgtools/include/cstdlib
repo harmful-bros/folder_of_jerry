@@ -1,0 +1,102 @@
+/*****************************************************************************/
+/* cstdlib   v4.1.3                                                          */
+/* Copyright (c) 1996-2006 Texas Instruments Incorporated                    */
+/*****************************************************************************/
+
+#ifndef _CSTDLIB
+#define _CSTDLIB
+
+#include <linkage.h>
+
+#define MB_CUR_MAX    1
+   
+#ifndef NULL
+#define NULL          0
+#endif
+   
+#define EXIT_FAILURE  1
+#define EXIT_SUCCESS  0
+   
+#define RAND_MAX      32767
+   
+namespace std 
+{
+   typedef struct { int quot, rem; } div_t;
+   typedef struct { long quot, rem; } ldiv_t;
+   typedef struct { long long quot, rem; } lldiv_t;
+
+#ifndef _SIZE_T
+#define _SIZE_T
+typedef unsigned long size_t;
+#endif
+   
+          /* These functions need C++ linkage */
+
+          int           abs (int i);
+          long          labs(long i);
+          long          far_calloc  (unsigned long num, unsigned long size);
+          long          far_malloc  (unsigned long size);
+          long          far_realloc (long ptr, unsigned long size);
+          void          far_free    (long ptr);
+          long          far_free_memory(void);
+	  long          far_max_free(void);
+	  long 		far_chkheap(void);
+
+          /* These functions can have C linkage */
+
+extern "C" {
+          long          strtol (const char *st, char **endptr, int base);
+          unsigned long strtoul(const char *st, char **endptr, int base);
+          double        strtod (const char *st, char **endptr);
+          long double   strtold (const char *st, char **endptr);
+   
+          long long          strtoll (const char *st, char **endptr, int base);
+          unsigned long long strtoull(const char *st, char **endptr, int base);
+   
+          int           atoi(const char *st);
+          long          atol(const char *st);
+ __inline double        atof(const char *st) { return strtod(st, NULL); }
+
+ 	  long long     atoll(const char *st);
+   
+          int           rand (void);
+          void          srand(unsigned seed);
+   
+          void         *calloc  (size_t num, size_t size);
+          void         *malloc  (size_t size);
+          void         *realloc (void *ptr, size_t size);
+          void          free    (void *ptr);
+          int           free_memory(void);
+	  int           max_free(void);
+	  void         *chkheap(void);
+          void         *memalign(size_t aln, size_t size);
+   
+          void          abort  (void); 
+          int           atexit (void (*func)(void));
+          void         *bsearch(const void *key, const void *base, 
+				size_t nmemb, size_t size,
+				int (*compar)(const void *,const void *));
+          void          qsort  (void *base, size_t nmemb, size_t size, 
+				int (*compar)(const void *, const void *));
+          void          exit   (int status);
+   
+          div_t         div (int numer, int denom);
+          ldiv_t        ldiv(long numer, long denom);
+
+	  lldiv_t	lldiv(long long numer, long long denom);
+   
+          char         *getenv(const char *string);
+          int           system(const char *name);
+}
+}
+
+#ifdef __embedded_cplusplus
+//----------------------------------------------------------------------------
+// We cannot expect the embedded C++ user to use std namespace. So we include
+// the using directive when compiled under embedded C++.
+//----------------------------------------------------------------------------
+using namespace std;
+#endif
+
+#endif
+
