@@ -17,6 +17,17 @@ Click my blog	 : **_[Jerry's blog](https://blog.naver.com/snim008)_**<br>
 Click my resume	: 
 **_[LinkedIn](https://www.linkedin.com/in/leejaeseong-19871224)_**
 
+### Education
+* **Yonsei University** - MSc 2016 Dept. of Computer Science
+* **Dankook University** - BSc 2014 Dept. of Electronic Engineering
+
+### Experiences
+* **Intel Corporation** - Application Engineer(Apr.2018~Present)
+* **LG Electronics** - Junior Research Engineer(Feb.2016~Apr.2018)
+* **Mobile and Embedded System Research Group** - MSc student(Dec.2013~Dec.2015)
+* **MAZE refer to a research of micro robot** - BSc student(Mar.2006~Feb.2014)
+* **Cuberevo-digital co., ltd** - Software Engineer (Feb.2009~Dec.2011)
+
 ## How to download the codes?
 - Using the GIT
 
