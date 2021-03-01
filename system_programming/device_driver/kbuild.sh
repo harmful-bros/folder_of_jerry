@@ -6,42 +6,50 @@ CPU_NUM=$(grep -c processor /proc/cpuinfo)
 
 OUT_DIR="${PWD}/out"
 
-set -e
+MAKE_ARGS=(
+	"ARCH=${ARCH}"
+	"CROSS_COMPILE=${CROSS_COMPILE}"
+	"O=${OUT_DIR}"
+	"-j ${CPU_NUM}"
+)
 
+BUILD_ARGS=(
+	"uImage"
+	"dtbs"
+	"LOADADDR=0x80008000"
+)
+
+set -e
 mkdir -p ${OUT_DIR}
 
-# distclean
-make ARCH=${ARCH} distclean
+if [[ $# -ne 1 ]]
+then
+	echo "Need to input the parameter"
+	echo "You can input the parameters as below."
+	echo "distclean, build, module"
+	echo "ex) ./docker.sh module"
+	exit
+fi
 
-# defconfig
-make \
-	ARCH=${ARCH} \
-	KBUILD_OUTPUT=${OUT_DIR} \
-	bb.org_defconfig
+case "$1" in
+	"distclean")
+		make ARCH=${ARCH} distclean
+		;;
 
-# build
-make \
-	ARCH=${ARCH} \
-	CROSS_COMPILE=${CROSS_COMPILE} \
-	KBUILD_OUTPUT=${OUT_DIR} \
-	uImage \
-	dtbs \
-	LOADADDR=0x80008000 \
-	-j ${CPU_NUM}
+	"build")
+		make ${MAKE_ARGS[@]} bb.org_defconfig
+		make ${MAKE_ARGS[@]} ${BUILD_ARGS[@]}
+		;;
 
-# geneator dtb for module
-make \
-	-C ${OUT_DIR} \
-	ARCH=${ARCH} \
-	CROSS_COMPILE=${CROSS_COMPILE} \
-	INSTALL_MOD_PATH=${OUT_DIR} \
-	modules \
-	-j ${CPU_NUM}
+	"module")
+		make ${MAKE_ARGS[@]} INSTALL_MOD_PATH=${OUT_DIR} modules
+		make ${MAKE_ARGS[@]} INSTALL_MOD_PATH=${OUT_DIR} modules_install
+		;;
 
-make \
-	-C ${OUT_DIR} \
-	ARCH=${ARCH} \
-	INSTALL_MOD_PATH=${OUT_DIR} \
-	modules_install
+	*)
+		echo "Invalid Parameter!"
+		exit 1
+		;;
+esac
 
 echo "Done!"
